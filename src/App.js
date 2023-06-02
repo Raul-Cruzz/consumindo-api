@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 function App() {
+  const [pokemonList, setpokemonList] = useState([])
+
+  useEffect(() => {
+
+      axios.get('https://pokeapi.co/api/v2/pokemon')
+      .then((res) => {setpokemonList(res.data.results)})
+      .catch((err) => (err))
+
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Consumindo API e mapeando os dados, trazendo o nome dos pokemons:
+      <div>{pokemonList.map((pokemon) => (
+            <div>{pokemon.name}</div>
+        ))}</div>
+      
     </div>
   );
 }
